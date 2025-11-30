@@ -1,5 +1,47 @@
 <!DOCTYPE html>
-<html><head><title>Student Info</title><link rel="stylesheet" href="style.css"></head>
-<body><h1>Student Info</h1>
-<div class="card" onclick="location.href='holds.html'"><h3>View Holds</h3></div>
-</body></html>
+<html>
+<head>
+    <title>Student Info</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="header">
+    <button class="back-btn" onclick="history.back()">←</button>
+    <span class="title">Student Information</span>
+</div>
+
+<h1>Student Profile</h1>
+
+<div class="card">
+    <h3>Personal Information</h3>
+    <p><strong>Name:</strong> Jake Walker</p>
+    <p><strong>DOB:</strong> 03/14/2004</p>
+    <p><strong>Student ID:</strong> 002394812</p>
+    <p><strong>Classification:</strong> Junior</p>
+    <p><strong>Major:</strong> Computer Science (B.S.)</p>
+</div>
+
+<div class="card">
+    <h3>Academic Information</h3>
+    <p><strong>GPA:</strong> 3.42</p>
+    <p><strong>Credits Completed:</strong> 72 / 120</p>
+    <p><strong>Academic Standing:</strong> Good</p>
+</div>
+
+<div class="card">
+    <h3>Contact Information</h3>
+    <p><strong>Email:</strong> jwalker7@students.kennesaw.edu</p>
+    <p><strong>Phone:</strong> (404) 555-2943</p>
+</div>
+
+<div class="card" onclick="location.href='holds.html'">
+    <h3>Account Holds →</h3>
+</div>
+
+<button class="btn-secondary" onclick="location.href='dashboard.html'">
+    Return to Dashboard
+</button>
+
+</body>
+</html>
