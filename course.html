@@ -26,7 +26,6 @@
 
     <button id="register-btn" class="btn-primary"></button>
 
-    <!-- ⭐ NEW BUTTON FOR SIMULATING HOLDS ⭐ -->
     <button id="hold-btn" class="btn-danger" style="margin-top:10px;">
         Simulate Registration Hold
     </button>
@@ -36,21 +35,18 @@
 <button class="btn-secondary" onclick="location.href='dashboard.html'">Return to Dashboard</button>
 
 <script>
-// === FULL COURSE DATA ===
 const courses = {
-    "CSE1321": { title:"CSE 1321 – Programming I", credits:3, prereq:"None", days:"Mon/Wed", time:"10:00 AM - 11:15 AM", professor:"Dr. Alicia Morgan" },
-    "MATH1190": { title:"MATH 1190 – Calculus I", credits:4, prereq:"Pre-Calculus", days:"Tue/Thu", time:"9:30 AM - 10:45 AM", professor:"Dr. Thomas Greene" },
+    "CSE1321": { title:"CSE 1321 – Programming I", credits:3, prereq:"None", days:"Mon/Wed", time:"10:00 AM - 11:15 AM", professor:"Dr. Ally Morgan" },
+    "MATH1190": { title:"MATH 1190 – Calculus I", credits:4, prereq:"Pre-Calculus", days:"Tue/Thu", time:"9:30 AM - 10:45 AM", professor:"Dr. Thomas Johnston" },
     "ENGL1101": { title:"ENGL 1101 – Composition I", credits:3, prereq:"None", days:"Mon/Wed/Fri", time:"12:00 PM - 12:50 PM", professor:"Prof. Hannah Evans" },
     "CSE2300": { title:"CSE 2300 – Discrete Structures", credits:3, prereq:"CSE 1321", days:"Tue/Thu", time:"2:00 PM - 3:15 PM", professor:"Dr. James Walker" },
-    "ECON2100": { title:"ECON 2100 – Microeconomics", credits:3, prereq:"None", days:"Wed", time:"4:00 PM - 6:45 PM", professor:"Dr. Elaine Porter" }
+    "ECON2100": { title:"ECON 2100 – Microeconomics", credits:3, prereq:"None", days:"Wed", time:"4:00 PM - 6:45 PM", professor:"Dr. Michael Porter" }
 };
 
-// Get course from URL
 const params = new URLSearchParams(window.location.search);
 const courseID = params.get("course");
 const course = courses[courseID];
 
-// Fill in course details
 document.getElementById("course-title").textContent = course.title;
 document.getElementById("course-info").innerHTML = `
     <strong>Credits:</strong> ${course.credits}<br>
@@ -60,7 +56,6 @@ document.getElementById("course-days").textContent = `Days: ${course.days}`;
 document.getElementById("course-time").textContent = `Time: ${course.time}`;
 document.getElementById("course-prof").textContent = `Professor: ${course.professor}`;
 
-// Registration logic
 const regKey = "registered_" + courseID;
 const registerBtn = document.getElementById("register-btn");
 const holdBtn = document.getElementById("hold-btn");
@@ -84,7 +79,6 @@ function updateButton() {
 
 updateButton();
 
-// SUCCESSFUL REGISTRATION
 registerBtn.addEventListener("click", () => {
     localStorage.setItem(regKey, "true");
 
@@ -94,7 +88,6 @@ registerBtn.addEventListener("click", () => {
     updateButton();
 });
 
-// ⭐ REGISTRATION FAILURE DUE TO HOLD ⭐
 holdBtn.addEventListener("click", () => {
     addNotification(`Registration failed for ${course.title}: ACCOUNT HOLD.`);
     showToast("Registration failed due to a hold.", "error");
