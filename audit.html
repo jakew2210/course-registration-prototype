@@ -2,8 +2,8 @@
 <html>
 <head>
     <title>Degree Audit</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="app.js?v=9"></script>
+    <link rel="stylesheet" href="style.css?v=20">
+    <script src="app.js?v=20"></script>
 </head>
 <body>
 
@@ -38,9 +38,7 @@
 <!-- In Progress / Registered Courses -->
 <div class="card">
     <h3>Current / In-Progress Courses</h3>
-    <div id="inprogress-container">
-        <p>Loading your registered courses...</p>
-    </div>
+    <div id="inprogress-container"><p>Loading...</p></div>
 </div>
 
 <!-- Remaining Requirements -->
@@ -50,7 +48,8 @@
         <li>Upper-Division Major Courses (27 credits)</li>
         <li>Technical Electives (9 credits)</li>
         <li>Free Electives (12 credits)</li>
-        <li>Senior Capstone</li>
+        <li>Senior Capstone (3 credits)</li>
+        <li>General Education Requirements (varies)</li>
     </ul>
 </div>
 
@@ -59,7 +58,7 @@
 </button>
 
 <script>
-// Pull registered courses
+// COURSE LIST FOR DYNAMIC IN-PROGRESS SECTION
 const courses = {
     "CSE1321": "CSE 1321 – Programming I",
     "MATH1190": "MATH 1190 – Calculus I",
@@ -73,12 +72,13 @@ container.innerHTML = "";
 
 let found = false;
 
+// Loop through each course and check registration
 for (const id in courses) {
     if (localStorage.getItem("registered_" + id) === "true") {
         found = true;
-        const item = document.createElement("p");
-        item.textContent = courses[id];
-        container.appendChild(item);
+        const p = document.createElement("p");
+        p.textContent = courses[id];
+        container.appendChild(p);
     }
 }
 
