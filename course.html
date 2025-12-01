@@ -1,11 +1,120 @@
 <!DOCTYPE html>
-<html><head><title>Course Details</title><link rel="stylesheet" href="style.css"></head>
-<body><h1>Programming I</h1>
+<html>
+<head>
+    <title>Course Details</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="app.js?v=6"></script>
+</head>
+<body>
+
+<div class="header">
+    <button class="back-btn" onclick="history.back()">←</button>
+    <span class="title">Course Details</span>
+</div>
+
+<h1 id="course-title"></h1>
+
 <div class="card">
-<p>Credits: 3</p><p>Prerequisites: None</p><p>Seats Available: 12</p>
-<button class="btn-primary" onclick="location.href='register-success.html'">Register</button>
-<button class="btn-secondary" onclick="location.href='register-error.html'">Simulate Error</button>
-</div></body></html>
-<button class="btn-secondary" onclick="location.href='dashboard.html'">
-    Return to Dashboard
-</button>
+    <p id="course-info"></p>
+
+    <h3>Schedule</h3>
+    <p id="course-days"></p>
+    <p id="course-time"></p>
+
+    <h3>Instructor</h3>
+    <p id="course-prof"></p>
+
+    <button id="register-btn" class="btn-primary"></button>
+</div>
+
+<button class="btn-secondary" onclick="location.href='dashboard.html'">Return to Dashboard</button>
+
+<script>
+const courses = {
+    "CSE1321": { 
+        title: "CSE 1321 – Programming I", 
+        credits: 3, 
+        prereq: "None",
+        days: "Mon/Wed",
+        time: "10:00 AM - 11:15 AM",
+        professor: "Dr. Alicia Morgan"
+    },
+
+    "MATH1190": { 
+        title: "MATH 1190 – Calculus I", 
+        credits: 4, 
+        prereq: "Pre-Calculus",
+        days: "Tue/Thu",
+        time: "9:30 AM - 10:45 AM",
+        professor: "Dr. Thomas Greene"
+    },
+
+    "ENGL1101": { 
+        title: "ENGL 1101 – Composition I", 
+        credits: 3, 
+        prereq: "None",
+        days: "Mon/Wed/Fri",
+        time: "12:00 PM - 12:50 PM",
+        professor: "Prof. Hannah Evans"
+    },
+
+    "CSE2300": { 
+        title: "CSE 2300 – Discrete Structures", 
+        credits: 3, 
+        prereq: "CSE 1321",
+        days: "Tue/Thu",
+        time: "2:00 PM - 3:15 PM",
+        professor: "Dr. James Walker"
+    },
+
+    "ECON2100": { 
+        title: "ECON 2100 – Microeconomics", 
+        credits: 3, 
+        prereq: "None",
+        days: "Wed",
+        time: "4:00 PM - 6:45 PM",
+        professor: "Dr. Elaine Porter"
+    }
+};
+
+const params = new URLSearchParams(window.location.search);
+const courseID = params.get("course");
+
+const course = courses[courseID];
+
+document.getElementById("course-title").textContent = course.title;
+document.getElementById("course-info").innerHTML = `
+    <strong>Credits:</strong> ${course.credits}<br>
+    <strong>Prerequisites:</strong> ${course.prereq}
+`;
+
+document.getElementById("course-days").textContent = `Days: ${course.days}`;
+document.getElementById("course-time").textContent = `Time: ${course.time}`;
+document.getElementById("course-prof").textContent = `Professor: ${course.professor}`;
+
+const regKey = "registered_" + courseID;
+const registerBtn = document.getElementById("register-btn");
+
+function updateButton() {
+    if (localStorage.getItem(regKey) === "true") {
+        registerBtn.textContent = "Registered ✓";
+        registerBtn.className = "btn-secondary";
+        registerBtn.disabled = true;
+    } else {
+        registerBtn.textContent = "Register";
+        registerBtn.className = "btn-primary";
+        registerBtn.disabled = false;
+    }
+}
+
+updateButton();
+
+registerBtn.addEventListener("click", () => {
+    localStorage.setItem(regKey, "true");
+    showToast("You are now registered!", "success");
+    updateButton();
+});
+</script>
+
+</body>
+</html>
