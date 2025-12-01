@@ -3,7 +3,7 @@
 <head>
     <title>Course Details</title>
     <link rel="stylesheet" href="style.css">
-    <script src="app.js?v=6"></script>
+    <script src="app.js?v=7"></script>
 </head>
 <body>
 
@@ -31,55 +31,15 @@
 
 <script>
 const courses = {
-    "CSE1321": { 
-        title: "CSE 1321 – Programming I", 
-        credits: 3, 
-        prereq: "None",
-        days: "Mon/Wed",
-        time: "10:00 AM - 11:15 AM",
-        professor: "Dr. Alicia Morgan"
-    },
-
-    "MATH1190": { 
-        title: "MATH 1190 – Calculus I", 
-        credits: 4, 
-        prereq: "Pre-Calculus",
-        days: "Tue/Thu",
-        time: "9:30 AM - 10:45 AM",
-        professor: "Dr. Thomas Greene"
-    },
-
-    "ENGL1101": { 
-        title: "ENGL 1101 – Composition I", 
-        credits: 3, 
-        prereq: "None",
-        days: "Mon/Wed/Fri",
-        time: "12:00 PM - 12:50 PM",
-        professor: "Prof. Hannah Evans"
-    },
-
-    "CSE2300": { 
-        title: "CSE 2300 – Discrete Structures", 
-        credits: 3, 
-        prereq: "CSE 1321",
-        days: "Tue/Thu",
-        time: "2:00 PM - 3:15 PM",
-        professor: "Dr. James Walker"
-    },
-
-    "ECON2100": { 
-        title: "ECON 2100 – Microeconomics", 
-        credits: 3, 
-        prereq: "None",
-        days: "Wed",
-        time: "4:00 PM - 6:45 PM",
-        professor: "Dr. Elaine Porter"
-    }
+    "CSE1321": { title: "CSE 1321 – Programming I", credits: 3, prereq: "None", days:"Mon/Wed", time:"10:00 AM - 11:15 AM", professor:"Dr. Alicia Morgan" },
+    "MATH1190": { title: "MATH 1190 – Calculus I", credits: 4, prereq: "Pre-Calculus", days:"Tue/Thu", time:"9:30 AM - 10:45 AM", professor:"Dr. Thomas Greene" },
+    "ENGL1101": { title: "ENGL 1101 – Composition I", credits: 3, prereq:"None", days:"Mon/Wed/Fri", time:"12:00 PM - 12:50 PM", professor:"Prof. Hannah Evans" },
+    "CSE2300": { title: "CSE 2300 – Discrete Structures", credits: 3, prereq:"CSE 1321", days:"Tue/Thu", time:"2:00 PM - 3:15 PM", professor:"Dr. James Walker" },
+    "ECON2100": { title: "ECON 2100 – Microeconomics", credits: 3, prereq:"None", days:"Wed", time:"4:00 PM - 6:45 PM", professor:"Dr. Elaine Porter" }
 };
 
 const params = new URLSearchParams(window.location.search);
 const courseID = params.get("course");
-
 const course = courses[courseID];
 
 document.getElementById("course-title").textContent = course.title;
@@ -87,7 +47,6 @@ document.getElementById("course-info").innerHTML = `
     <strong>Credits:</strong> ${course.credits}<br>
     <strong>Prerequisites:</strong> ${course.prereq}
 `;
-
 document.getElementById("course-days").textContent = `Days: ${course.days}`;
 document.getElementById("course-time").textContent = `Time: ${course.time}`;
 document.getElementById("course-prof").textContent = `Professor: ${course.professor}`;
@@ -106,11 +65,13 @@ function updateButton() {
         registerBtn.disabled = false;
     }
 }
-
 updateButton();
 
 registerBtn.addEventListener("click", () => {
     localStorage.setItem(regKey, "true");
+
+    addNotification(`You registered for ${course.title}.`);
+
     showToast("You are now registered!", "success");
     updateButton();
 });
