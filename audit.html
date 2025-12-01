@@ -14,7 +14,6 @@
 
 <h1>Degree Audit</h1>
 
-<!-- Overall Progress -->
 <div class="card">
     <h3>Overall Progress</h3>
     <p><strong>Total Credits Required:</strong> 120</p>
@@ -23,7 +22,6 @@
     <p><strong>Current GPA:</strong> 0.0</p>
 </div>
 
-<!-- Completed Courses -->
 <div class="card">
     <h3>Completed Courses</h3>
     <ul>
@@ -35,13 +33,11 @@
     </ul>
 </div>
 
-<!-- In Progress / Registered Courses -->
 <div class="card">
     <h3>Current / In-Progress Courses</h3>
     <div id="inprogress-container"><p>Loading...</p></div>
 </div>
 
-<!-- Remaining Requirements -->
 <div class="card">
     <h3>Remaining Requirements</h3>
     <ul>
@@ -57,7 +53,6 @@
 </button>
 
 <script>
-// COURSE LIST FOR DYNAMIC IN-PROGRESS SECTION
 const courses = {
     "CSE1321": "CSE 1321 – Programming I",
     "MATH1190": "MATH 1190 – Calculus I",
@@ -71,7 +66,6 @@ container.innerHTML = "";
 
 let found = false;
 
-// Loop through each course and check registration
 for (const id in courses) {
     if (localStorage.getItem("registered_" + id) === "true") {
         found = true;
