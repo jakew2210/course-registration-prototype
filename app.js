@@ -10,21 +10,33 @@ function loadValue(key) {
 
 function setupAutoSave(id, key) {
     const el = document.getElementById(id);
-    if (!el) {
-        console.error("Element not found:", id);
-        return;
-    }
+    if (!el) return;
 
-    // Load saved value on page load
     let saved = loadValue(key);
     if (saved !== null && saved !== undefined) {
         el.value = saved;
     }
 
-    // Save when user types
-    el.addEventListener("input", function() {
+    el.addEventListener("input", () => {
         saveValue(key, el.value);
     });
+}
+
+
+
+function addNotification(message) {
+    let list = JSON.parse(localStorage.getItem("notifications") || "[]");
+
+    list.unshift({
+        text: message,
+        time: new Date().toLocaleString()
+    });
+
+    localStorage.setItem("notifications", JSON.stringify(list));
+}
+
+function loadNotifications() {
+    return JSON.parse(localStorage.getItem("notifications") || "[]");
 }
 
 
@@ -34,7 +46,5 @@ function showToast(message, type = "success") {
     div.textContent = message;
     document.body.appendChild(div);
 
-    setTimeout(() => {
-        div.remove();
-    }, 3000);
+    setTimeout(() => div.remove(), 3000);
 }
