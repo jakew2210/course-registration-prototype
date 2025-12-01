@@ -1,8 +1,36 @@
 <!DOCTYPE html>
-<html><head><title>Manage Capacity</title><link rel="stylesheet" href="style.css"></head>
-<body><h1>Course Capacity</h1>
-<div class="card"><h3>CSE 1321</h3><input type="number" value="30"><button class="btn-primary">Save</button></div>
-</body></html>
-<button class="btn-secondary" onclick="location.href='dashboard.html'">
-    Return to Dashboard
-</button>
+<html>
+<head>
+    <title>Manage Capacity</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="app.js"></script>
+</head>
+<body>
+
+<div class="header">
+    <button class="back-btn" onclick="history.back()">←</button>
+    <span class="title">Manage Course Capacity</span>
+</div>
+
+<h1>Course Capacity</h1>
+
+<div class="card">
+    <h3>CSE 1321</h3>
+
+    <label><strong>Set Maximum Seats</strong></label>
+    <input type="number" id="cap-1321" placeholder="Enter Capacity">
+
+    <button class="btn-primary" onclick="showToast('Capacity saved!', 'success')">
+        Save
+    </button>
+</div>
+
+<script>
+    setupAutoSave("cap-1321", "capacity_cse1321");
+</script>
+
+<button class="btn-secondary" onclick="location.href='employee.html'">Return to Employee Dashboard</button>
+<button class="btn-secondary" onclick="location.href='dashboard.html'">Return to Dashboard</button>
+
+</body>
+</html>
