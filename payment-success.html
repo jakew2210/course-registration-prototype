@@ -1,9 +1,27 @@
 <!DOCTYPE html>
-<html><head><title>Payment Successful</title><link rel="stylesheet" href="style.css"></head>
-<body><h1>Payment Successful</h1>
-<div class="card"><p>Your payment has been processed.</p></div>
+<html>
+<head>
+    <title>Payment Successful</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="app.js?v=7"></script>
+</head>
+<body>
+
+<h1>Payment Successful</h1>
+
+<div class="card">
+    <p>Your payment has been processed.</p>
+</div>
+
+<script>
+addNotification("Your tuition payment was received.");
+</script>
+
 <button class="btn-primary" onclick="location.href='receipt.html'">View Receipt</button>
-</body></html>
+
 <button class="btn-secondary" onclick="location.href='dashboard.html'">
     Return to Dashboard
 </button>
+
+</body>
+</html>
