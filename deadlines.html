@@ -1,9 +1,38 @@
 <!DOCTYPE html>
-<html><head><title>Set Deadlines</title><link rel="stylesheet" href="style.css"></head>
-<body><h1>Academic Deadlines</h1>
-<div class="card"><p>Add/Drop Deadline</p><input type="date"></div>
-<button class="btn-primary">Save Deadlines</button>
-</body></html>
-<button class="btn-secondary" onclick="location.href='dashboard.html'">
-    Return to Dashboard
-</button>
+<html>
+<head>
+    <title>Set Academic Deadlines</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="app.js"></script>
+</head>
+<body>
+
+<div class="header">
+    <button class="back-btn" onclick="history.back()">←</button>
+    <span class="title">Academic Deadlines</span>
+</div>
+
+<h1>Academic Deadlines</h1>
+
+<div class="card">
+    <h3>Add/Drop Deadline</h3>
+    <input type="date" id="deadline-adddrop">
+
+    <h3>Payment Deadline</h3>
+    <input type="date" id="deadline-payment">
+
+    <button class="btn-primary" onclick="showToast('Deadlines saved!', 'success')">
+        Save Deadlines
+    </button>
+</div>
+
+<script>
+    setupAutoSave("deadline-adddrop", "deadline_adddrop");
+    setupAutoSave("deadline-payment", "deadline_payment");
+</script>
+
+<button class="btn-secondary" onclick="location.href='employee.html'">Return to Employee Dashboard</button>
+<button class="btn-secondary" onclick="location.href='dashboard.html'">Return to Dashboard</button>
+
+</body>
+</html>
