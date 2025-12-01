@@ -1,4 +1,4 @@
-/* ===== STORAGE HELPERS ===== */
+
 
 function saveValue(key, value) {
     localStorage.setItem(key, value);
@@ -9,28 +9,32 @@ function loadValue(key) {
 }
 
 function setupAutoSave(id, key) {
-    let element = document.getElementById(id);
-    if (!element) return;
-
-    // Load saved value into the field
-    let saved = loadValue(key);
-    if (saved !== null && saved !== undefined) {
-        element.value = saved;
+    const el = document.getElementById(id);
+    if (!el) {
+        console.error("Element not found:", id);
+        return;
     }
 
-    // Save on change
-    element.addEventListener("input", () => {
-        saveValue(key, element.value);
+    // Load saved value on page load
+    let saved = loadValue(key);
+    if (saved !== null && saved !== undefined) {
+        el.value = saved;
+    }
+
+    // Save when user types
+    el.addEventListener("input", function() {
+        saveValue(key, el.value);
     });
 }
 
-/* ===== FEEDBACK TOAST ===== */
 
-function showToast(message, type="success") {
+function showToast(message, type = "success") {
     const div = document.createElement("div");
     div.className = `toast ${type}`;
     div.textContent = message;
     document.body.appendChild(div);
 
-    setTimeout(() => { div.remove(); }, 3000);
+    setTimeout(() => {
+        div.remove();
+    }, 3000);
 }
