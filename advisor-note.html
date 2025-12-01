@@ -1,9 +1,38 @@
 <!DOCTYPE html>
-<html><head><title>Add Note</title><link rel="stylesheet" href="style.css"></head>
-<body><h1>Add Advisor Note</h1>
-<textarea style="width:100%;height:150px;"></textarea>
-<button class="btn-primary" onclick="location.href='advisor.html'">Save Note</button>
-</body></html>
-<button class="btn-secondary" onclick="location.href='dashboard.html'">
-    Return to Dashboard
-</button>
+<html>
+<head>
+    <title>Add Advisor Note</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="app.js?v=7"></script>
+</head>
+<body>
+
+<div class="header">
+    <button class="back-btn" onclick="history.back()">←</button>
+    <span class="title">Advisor Note</span>
+</div>
+
+<h1>Add Advisor Note</h1>
+
+<textarea id="advisor-note" style="width:100%;height:150px;"></textarea>
+
+<button class="btn-primary" onclick="saveNote()">Save Note</button>
+
+<script>
+function saveNote() {
+    const note = document.getElementById("advisor-note").value;
+
+    if (note.trim() === "") {
+        showToast("Cannot save empty note.", "error");
+        return;
+    }
+
+    addNotification(`Advisor note added: "${note}"`);
+    showToast("Advisor note saved.", "success");
+
+    setTimeout(() => location.href = 'advisor.html', 700);
+}
+</script>
+
+</body>
+</html>
