@@ -1,9 +1,55 @@
 <!DOCTYPE html>
-<html><head><title>Payment Method</title><link rel="stylesheet" href="style.css"></head>
-<body><h1>Select Payment Method</h1>
-<select><option>Credit/Debit Card</option><option>ACH Bank Transfer</option></select>
-<button class="btn-primary" onclick="location.href='payment-success.html'">Submit Payment</button>
-</body></html>
-<button class="btn-secondary" onclick="location.href='dashboard.html'">
-    Return to Dashboard
+<html>
+<head>
+    <title>Payment Information</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="app.js?v=8"></script>
+</head>
+<body>
+
+<div class="header">
+    <button class="back-btn" onclick="history.back()">←</button>
+    <span class="title">Payment Information</span>
+</div>
+
+<h1>Enter Payment Details</h1>
+
+<div class="card">
+
+    <h3>Cardholder Information</h3>
+    <input type="text" placeholder="Name on Card">
+
+    <h3>Card Details</h3>
+    <input type="text" placeholder="Card Number (e.g., 1234 5678 9012 3456)">
+    <input type="text" placeholder="Expiration Date (MM/YY)">
+    <input type="text" placeholder="CVV">
+
+    <h3>Billing Address</h3>
+    <input type="text" placeholder="Street Address">
+    <input type="text" placeholder="City">
+    <input type="text" placeholder="State">
+    <input type="text" placeholder="ZIP Code">
+
+    <button class="btn-primary" onclick="processPayment()">
+        Submit Payment
+    </button>
+</div>
+
+<button class="btn-secondary" onclick="location.href='billing.html'">
+    Return to Billing
 </button>
+
+<script>
+function processPayment() {
+    // No validation required — this is a prototype
+    addNotification("Your tuition payment was received.");
+    showToast("Processing payment...", "success");
+
+    setTimeout(() => {
+        window.location.href = "payment-success.html";
+    }, 800);
+}
+</script>
+
+</body>
+</html>
