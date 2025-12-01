@@ -3,7 +3,7 @@
 <head>
     <title>My Courses</title>
     <link rel="stylesheet" href="style.css">
-    <script src="app.js?v=6"></script>
+    <script src="app.js?v=7"></script>
 </head>
 <body>
 
@@ -16,27 +16,23 @@
 
 <div id="courses-container"></div>
 
-<button class="btn-secondary" onclick="location.href='dashboard.html'">
-    Return to Dashboard
-</button>
+<button class="btn-secondary" onclick="location.href='dashboard.html'">Return to Dashboard</button>
 
 <script>
 const courses = {
-    "CSE1321": { title: "CSE 1321 – Programming I", days: "Mon/Wed", time: "10:00 AM - 11:15 AM", professor: "Dr. Alicia Morgan" },
-    "MATH1190": { title: "MATH 1190 – Calculus I", days: "Tue/Thu", time: "9:30 AM - 10:45 AM", professor: "Dr. Thomas Greene" },
-    "ENGL1101": { title: "ENGL 1101 – Composition I", days: "Mon/Wed/Fri", time: "12:00 PM - 12:50 PM", professor: "Prof. Hannah Evans" },
-    "CSE2300": { title: "CSE 2300 – Discrete Structures", days: "Tue/Thu", time: "2:00 PM - 3:15 PM", professor: "Dr. James Walker" },
-    "ECON2100": { title: "ECON 2100 – Microeconomics", days: "Wed", time: "4:00 PM - 6:45 PM", professor: "Dr. Elaine Porter" }
+    "CSE1321": { title:"CSE 1321 – Programming I", days:"Mon/Wed", time:"10:00–11:15", professor:"Dr. Alicia Morgan" },
+    "MATH1190": { title:"MATH 1190 – Calculus I", days:"Tue/Thu", time:"9:30–10:45", professor:"Dr. Thomas Greene" },
+    "ENGL1101": { title:"ENGL 1101 – Composition I", days:"MWF", time:"12:00–12:50", professor:"Prof. Hannah Evans" },
+    "CSE2300": { title:"CSE 2300 – Discrete Structures", days:"Tue/Thu", time:"2:00–3:15", professor:"Dr. James Walker" },
+    "ECON2100": { title:"ECON 2100 – Microeconomics", days:"Wed", time:"4:00–6:45", professor:"Dr. Elaine Porter" }
 };
 
 const container = document.getElementById("courses-container");
-
-let registeredAny = false;
+let found = false;
 
 for (const id in courses) {
     if (localStorage.getItem("registered_" + id) === "true") {
-        registeredAny = true;
-
+        found = true;
         const c = courses[id];
 
         const card = document.createElement("div");
@@ -44,32 +40,28 @@ for (const id in courses) {
 
         card.innerHTML = `
             <h3>${c.title}</h3>
-
             <p><strong>Days:</strong> ${c.days}</p>
             <p><strong>Time:</strong> ${c.time}</p>
             <p><strong>Professor:</strong> ${c.professor}</p>
 
-            <button class="btn-primary" onclick="dropCourse('${id}')">
-                Drop Course
-            </button>
+            <button class="btn-primary" onclick="dropCourse('${id}', '${c.title}')">Drop Course</button>
         `;
 
         container.appendChild(card);
     }
 }
 
-if (!registeredAny) {
+if (!found) {
     container.innerHTML = `
-        <div class="card">
-            <p>You are not registered for any courses yet.</p>
-        </div>
+        <div class="card"><p>You are not registered for any courses.</p></div>
     `;
 }
 
-function dropCourse(id) {
+function dropCourse(id, title) {
     localStorage.removeItem("registered_" + id);
-    showToast("Course dropped!", "success");
-    setTimeout(() => location.reload(), 700);
+    addNotification(`You dropped ${title}.`);
+    showToast("Course dropped.", "success");
+    setTimeout(() => location.reload(), 600);
 }
 </script>
 
