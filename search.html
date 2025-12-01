@@ -1,7 +1,30 @@
 <!DOCTYPE html>
-<html><head><title>Search Courses</title><link rel="stylesheet" href="style.css"></head>
-<body><h1>Search Courses</h1>
+<html>
+<head>
+    <title>Search Courses</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="app.js?v=4"></script>
+</head>
+<body>
+
+<div class="header">
+    <button class="back-btn" onclick="history.back()">←</button>
+    <span class="title">Search Courses</span>
+</div>
+
+<h1>Search Courses</h1>
+
 <input placeholder="Search by course or professor">
-<div class="card" onclick="location.href='course.html'"><h3>CSE 1321 – Programming I</h3><p>Seats Available: 12</p></div>
-<div class="card" onclick="location.href='course.html'"><h3>MATH 1190 – Calculus I</h3><p>Seats Available: 0 (Waitlist: 3)</p></div>
-</body></html>
+
+<div class="card" onclick="location.href='course.html?course=CSE1321'">
+    <h3>CSE 1321 – Programming I</h3>
+    <p>Seats Available: 12</p>
+</div>
+
+<div class="card" onclick="location.href='course.html?course=MATH1190'">
+    <h3>MATH 1190 – Calculus I</h3>
+    <p>Seats Available: 0 (Waitlist: 3)</p>
+</div>
+
+<div class="card" onclick="location.href='course.html?course=ENGL1101'">
+    <h3>ENGL 1101
