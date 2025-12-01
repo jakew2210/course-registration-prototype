@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Courses</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="app.js?v=6"></script>
+</head>
+<body>
+
+<div class="header">
+    <button class="back-btn" onclick="history.back()">←</button>
+    <span class="title">My Courses</span>
+</div>
+
+<h1>My Registered Courses</h1>
+
+<div id="courses-container"></div>
+
+<button class="btn-secondary" onclick="location.href='dashboard.html'">
+    Return to Dashboard
+</button>
+
+<script>
+const courses = {
+    "CSE1321": { title: "CSE 1321 – Programming I", days: "Mon/Wed", time: "10:00 AM - 11:15 AM", professor: "Dr. Alicia Morgan" },
+    "MATH1190": { title: "MATH 1190 – Calculus I", days: "Tue/Thu", time: "9:30 AM - 10:45 AM", professor: "Dr. Thomas Greene" },
+    "ENGL1101": { title: "ENGL 1101 – Composition I", days: "Mon/Wed/Fri", time: "12:00 PM - 12:50 PM", professor: "Prof. Hannah Evans" },
+    "CSE2300": { title: "CSE 2300 – Discrete Structures", days: "Tue/Thu", time: "2:00 PM - 3:15 PM", professor: "Dr. James Walker" },
+    "ECON2100": { title: "ECON 2100 – Microeconomics", days: "Wed", time: "4:00 PM - 6:45 PM", professor: "Dr. Elaine Porter" }
+};
+
+const container = document.getElementById("courses-container");
+
+let registeredAny = false;
+
+for (const id in courses) {
+    if (localStorage.getItem("registered_" + id) === "true") {
+        registeredAny = true;
+
+        const c = courses[id];
+
+        const card = document.createElement("div");
+        card.className = "card";
+
+        card.innerHTML = `
+            <h3>${c.title}</h3>
+
+            <p><strong>Days:</strong> ${c.days}</p>
+            <p><strong>Time:</strong> ${c.time}</p>
+            <p><strong>Professor:</strong> ${c.professor}</p>
+
+            <button class="btn-primary" onclick="dropCourse('${id}')">
+                Drop Course
+            </button>
+        `;
+
+        container.appendChild(card);
+    }
+}
+
+if (!registeredAny) {
+    container.innerHTML = `
+        <div class="card">
+            <p>You are not registered for any courses yet.</p>
+        </div>
+    `;
+}
+
+function dropCourse(id) {
+    localStorage.removeItem("registered_" + id);
+    showToast("Course dropped!", "success");
+    setTimeout(() => location.reload(), 700);
+}
+</script>
+
+</body>
+</html>
