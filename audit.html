@@ -1,8 +1,91 @@
 <!DOCTYPE html>
-<html><head><title>Degree Audit</title><link rel="stylesheet" href="style.css"></head>
-<body><h1>Degree Audit</h1>
-<div class="card"><p>PDF Viewer Mock</p></div>
-</body></html>
+<html>
+<head>
+    <title>Degree Audit</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="app.js?v=9"></script>
+</head>
+<body>
+
+<div class="header">
+    <button class="back-btn" onclick="history.back()">←</button>
+    <span class="title">Degree Audit</span>
+</div>
+
+<h1>Degree Audit</h1>
+
+<!-- Overall Progress -->
+<div class="card">
+    <h3>Overall Progress</h3>
+    <p><strong>Total Credits Required:</strong> 120</p>
+    <p><strong>Credits Completed:</strong> 72</p>
+    <p><strong>Credits Remaining:</strong> 48</p>
+    <p><strong>Current GPA:</strong> 3.42</p>
+</div>
+
+<!-- Completed Courses -->
+<div class="card">
+    <h3>Completed Courses</h3>
+    <ul>
+        <li>CSE 1321 – Programming I (3 credits)</li>
+        <li>ENGL 1102 – Composition II (3 credits)</li>
+        <li>MATH 1113 – Pre-Calculus (3 credits)</li>
+        <li>HIST 2111 – U.S. History (3 credits)</li>
+        <li>ART 1107 – Visual Arts (3 credits)</li>
+    </ul>
+</div>
+
+<!-- In Progress / Registered Courses -->
+<div class="card">
+    <h3>Current / In-Progress Courses</h3>
+    <div id="inprogress-container">
+        <p>Loading your registered courses...</p>
+    </div>
+</div>
+
+<!-- Remaining Requirements -->
+<div class="card">
+    <h3>Remaining Requirements</h3>
+    <ul>
+        <li>Upper-Division Major Courses (27 credits)</li>
+        <li>Technical Electives (9 credits)</li>
+        <li>Free Electives (12 credits)</li>
+        <li>Senior Capstone</li>
+    </ul>
+</div>
+
 <button class="btn-secondary" onclick="location.href='dashboard.html'">
     Return to Dashboard
 </button>
+
+<script>
+// Pull registered courses
+const courses = {
+    "CSE1321": "CSE 1321 – Programming I",
+    "MATH1190": "MATH 1190 – Calculus I",
+    "ENGL1101": "ENGL 1101 – Composition I",
+    "CSE2300": "CSE 2300 – Discrete Structures",
+    "ECON2100": "ECON 2100 – Microeconomics"
+};
+
+const container = document.getElementById("inprogress-container");
+container.innerHTML = "";
+
+let found = false;
+
+for (const id in courses) {
+    if (localStorage.getItem("registered_" + id) === "true") {
+        found = true;
+        const item = document.createElement("p");
+        item.textContent = courses[id];
+        container.appendChild(item);
+    }
+}
+
+if (!found) {
+    container.innerHTML = "<p>You are not currently registered for any courses.</p>";
+}
+</script>
+
+</body>
+</html>
