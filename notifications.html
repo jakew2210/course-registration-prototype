@@ -1,9 +1,43 @@
 <!DOCTYPE html>
-<html><head><title>Notifications</title><link rel="stylesheet" href="style.css"></head>
-<body><h1>Notifications</h1>
-<div class="card"><p>Payment Successful</p></div>
-<div class="card"><p>Waitlist Update: Your seat is available</p></div>
-</body></html>
-<button class="btn-secondary" onclick="location.href='dashboard.html'">
-    Return to Dashboard
-</button>
+<html>
+<head>
+    <title>Notifications</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="app.js?v=7"></script>
+</head>
+<body>
+
+<div class="header">
+    <button class="back-btn" onclick="history.back()">←</button>
+    <span class="title">Notifications</span>
+</div>
+
+<h1>Notifications</h1>
+
+<div id="noti-container"></div>
+
+<button class="btn-secondary" onclick="location.href='dashboard.html'">Return to Dashboard</button>
+
+<script>
+const container = document.getElementById("noti-container");
+const notifications = loadNotifications();
+
+if (notifications.length === 0) {
+    container.innerHTML = `<div class="card"><p>No notifications yet.</p></div>`;
+} else {
+    notifications.forEach(n => {
+        const card = document.createElement("div");
+        card.className = "card";
+
+        card.innerHTML = `
+            <p>${n.text}</p>
+            <small>${n.time}</small>
+        `;
+
+        container.appendChild(card);
+    });
+}
+</script>
+
+</body>
+</html>
