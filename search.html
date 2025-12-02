@@ -3,7 +3,15 @@
 <head>
     <title>Search Courses</title>
     <link rel="stylesheet" href="style.css">
-    <script src="app.js?v=4"></script>
+    <script src="app.js?v=23"></script>
+    <style>
+        .filter-section {
+            margin-bottom: 15px;
+        }
+        .filter-label {
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
 
@@ -14,36 +22,148 @@
 
 <h1>Search Courses</h1>
 
-<input placeholder="Search by course or professor">
+<!-- SEARCH BAR -->
+<input id="searchBox" placeholder="Search by course or professor..." oninput="applyFilters()">
 
-<div class="card" onclick="location.href='course.html?course=CSE1321'">
-    <h3>CSE 1321</h3>
-    <p>Seats Available: 12</p>
+<div class="filter-section">
+    <span class="filter-label">Professor:</span>
+    <select id="profFilter" onchange="applyFilters()">
+        <option value="">All</option>
+        <option value="Morgan">Dr. Alicia Morgan</option>
+        <option value="Greene">Dr. Thomas Greene</option>
+        <option value="Evans">Prof. Hannah Evans</option>
+        <option value="Walker">Dr. James Walker</option>
+        <option value="Porter">Dr. Elaine Porter</option>
+    </select>
 </div>
 
-<div class="card" onclick="location.href='course.html?course=MATH1190'">
-    <h3>MATH 1190</h3>
-    <p>Seats Available: 0 (Waitlist: 3)</p>
+<div class="filter-section">
+    <span class="filter-label">Days:</span><br>
+    <label><input type="checkbox" value="Mon" onchange="applyFilters()"> Mon</label>
+    <label><input type="checkbox" value="Tue" onchange="applyFilters()"> Tue</label>
+    <label><input type="checkbox" value="Wed" onchange="applyFilters()"> Wed</label>
+    <label><input type="checkbox" value="Thu" onchange="applyFilters()"> Thu</label>
+    <label><input type="checkbox" value="Fri" onchange="applyFilters()"> Fri</label>
 </div>
 
-<div class="card" onclick="location.href='course.html?course=ENGL1101'">
-    <h3>ENGL 1101</h3>
-    <p>Seats Available: 8</p>
+<div class="filter-section">
+    <span class="filter-label">Time:</span>
+    <select id="timeFilter" onchange="applyFilters()">
+        <option value="">All</option>
+        <option value="morning">Morning (8am–12pm)</option>
+        <option value="afternoon">Afternoon (12pm–4pm)</option>
+        <option value="evening">Evening (4pm+)</option>
+    </select>
 </div>
 
-<div class="card" onclick="location.href='course.html?course=CSE2300'">
-    <h3>CSE 2300</h3>
-    <p>Seats Available: 5</p>
-</div>
+<hr>
 
-<div class="card" onclick="location.href='course.html?course=ECON2100'">
-    <h3>ECON 2100</h3>
-    <p>Seats Available: 14</p>
-</div>
+<div id="courseContainer"></div>
 
-<button class="btn-secondary" onclick="location.href='dashboard.html'">
-    Return to Dashboard
-</button>
+<button class="btn-secondary" onclick="location.href='dashboard.html'">Return to Dashboard</button>
+
+<script>
+const courses = {
+    "CSE1321": { 
+        title: "CSE 1321",
+        days: "Mon/Wed",
+        time: "10:00 AM - 11:15 AM",
+        professor: "Dr. Ally Morgan"
+    },
+    "MATH1190": { 
+        title: "MATH 1190",
+        days: "Tue/Thu",
+        time: "9:30 AM - 10:45 AM",
+        professor: "Dr. Thomas Johnston"
+    },
+    "ENGL1101": { 
+        title: "ENGL 1101",
+        days: "Mon/Wed/Fri",
+        time: "12:00 PM - 12:50 PM",
+        professor: "Prof. Hannah Evans"
+    },
+    "CSE2300": { 
+        title: "CSE 2300",
+        days: "Tue/Thu",
+        time: "2:00 PM - 3:15 PM",
+        professor: "Dr. James Walker"
+    },
+    "ECON2100": { 
+        title: "ECON 2100",
+        days: "Wed",
+        time: "4:00 PM - 6:45 PM",
+        professor: "Dr. Michael Porter"
+    }
+};
+
+function getStartHour(timeStr) {
+    let hour = parseInt(timeStr.split(":")[0]);
+    const isPM = timeStr.includes("PM");
+
+    if (isPM && hour !== 12) hour += 12;
+    if (!isPM && hour === 12) hour = 0;
+
+    return hour;
+}
+
+function applyFilters() {
+    const searchValue = document.getElementById("searchBox").value.toLowerCase();
+    const profValue = document.getElementById("profFilter").value;
+    const timeValue = document.getElementById("timeFilter").value;
+    const checkedDays = [...document.querySelectorAll("input[type='checkbox']:checked")].map(cb => cb.value);
+
+    const container = document.getElementById("courseContainer");
+    container.innerHTML = "";
+
+    for (const id in courses) {
+        const c = courses[id];
+
+        if (!c.title.toLowerCase().includes(searchValue) &&
+            !c.professor.toLowerCase().includes(searchValue)) {
+            continue;
+        }
+
+        if (profValue !== "" && !c.professor.includes(profValue)) {
+            continue;
+        }
+
+        if (checkedDays.length > 0) {
+            let matchesDay = false;
+
+            checkedDays.forEach(day => {
+                if (c.days.includes(day)) matchesDay = true;
+            });
+
+            if (!matchesDay) continue;
+        }
+
+        const startHour = getStartHour(c.time);
+
+        if (timeValue === "morning" && !(startHour >= 8 && startHour < 12)) continue;
+        if (timeValue === "afternoon" && !(startHour >= 12 && startHour < 16)) continue;
+        if (timeValue === "evening" && startHour < 16) continue;
+
+        const div = document.createElement("div");
+        div.className = "card";
+        div.onclick = () => location.href = `course.html?course=${id}`;
+
+        div.innerHTML = `
+            <h3>${c.title}</h3>
+            <p><strong>Professor:</strong> ${c.professor}</p>
+            <p><strong>Days:</strong> ${c.days}</p>
+            <p><strong>Time:</strong> ${c.time}</p>
+        `;
+
+        container.appendChild(div);
+    }
+
+    if (container.innerHTML === "") {
+        container.innerHTML = `<p>No courses match your search or filters.</p>`;
+    }
+}
+
+window.onload = applyFilters;
+</script>
 
 </body>
 </html>
